@@ -58,7 +58,14 @@ class PageSlicesExtension extends DataExtension
     public function getSlices()
     {
         $controllers = ArrayList::create();
-        if ($slices = $this->owner->PageSlices()) {
+        
+        if( $this->owner->getClassName()=='VirtualPage' ){
+            $slices = $this->owner->CopyContentFrom()->PageSlices();
+        } else {
+            $slices = $this->owner->PageSlices();
+        }
+
+        if ($slices) {
             /** @var PageSlice $slice */
             foreach ($slices as $slice) {
                 $controller = $slice->getController();
